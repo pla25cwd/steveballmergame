@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4krhyqxi2ufb"]
+
+[ext_resource type="PackedScene" uid="uid://dx634x4eyog24" path="res://player.tscn" id="1_6elyq"]
+[ext_resource type="Script" path="res://vista/strat_multiplayer.gd" id="1_83m2t"]
+
+[node name="strat_multiplayer" type="Node2D"]
+script = ExtResource("1_83m2t")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(62, -1)
+zoom = Vector2(0.9, 0.9)
+
+[node name="player" parent="." instance=ExtResource("1_6elyq")]
+
+[node name="Camera2D" parent="player" index="3"]
+enabled = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="player"]
+
+[node name="player2" parent="." instance=ExtResource("1_6elyq")]
+position = Vector2(114, -1)
+
+[node name="Camera2D" parent="player2" index="3"]
+enabled = false
+
+[node name="VisibleOnScreenNotifier2D3" type="VisibleOnScreenNotifier2D" parent="player2"]
+position = Vector2(-114, 1)
+
+[connection signal="screen_exited" from="player/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_3_screen_exited"]
+[connection signal="screen_exited" from="player2/VisibleOnScreenNotifier2D3" to="." method="_on_visible_on_screen_notifier_2d_3_screen_exited"]
+
+[editable path="player"]
+[editable path="player2"]

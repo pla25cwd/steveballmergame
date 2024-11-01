@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://br4ef8tmlfjhm"]
+
+[ext_resource type="Texture2D" uid="uid://c2jnstx218eyp" path="res://tux/tux.png" id="1_x06v2"]
+[ext_resource type="Script" path="res://tux/tux.gd" id="1_x8apy"]
+[ext_resource type="Texture2D" uid="uid://c2t2sevg3hhi5" path="res://tux/tux2.png" id="3_kkkld"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l8kvh"]
+friction = 0.3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p0pco"]
+radius = 75.0
+
+[sub_resource type="Animation" id="Animation_cc1ji"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7wca3"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tfp0y"]
+_data = {
+"RESET": SubResource("Animation_cc1ji"),
+"new_animation": SubResource("Animation_7wca3")
+}
+
+[node name="tux" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+process_mode = 4
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_l8kvh")
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 100
+script = ExtResource("1_x8apy")
+
+[node name="onscreen" type="VisibleOnScreenEnabler2D" parent="RigidBody2D"]
+process_mode = 3
+position = Vector2(1.50856, -0.468567)
+scale = Vector2(0.982857, 0.937143)
+rect = Rect2(-87, -87, 175, 175)
+enable_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, -1.5)
+shape = SubResource("CircleShape2D_p0pco")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_x06v2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="RigidBody2D"]
+visible = false
+texture = ExtResource("3_kkkld")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RigidBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_tfp0y")
+}
+
+[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_entered"]
+[connection signal="screen_entered" from="RigidBody2D/onscreen" to="RigidBody2D" method="_on_onscreen_screen_entered"]

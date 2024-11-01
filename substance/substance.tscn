@@ -1,0 +1,178 @@
+[gd_scene load_steps=18 format=3 uid="uid://crnq6rfoq04pc"]
+
+[ext_resource type="Script" path="res://substance/substance.gd" id="1_0biny"]
+[ext_resource type="Texture2D" uid="uid://deexxvww4umjo" path="res://substance/01.png" id="2_r5501"]
+[ext_resource type="Texture2D" uid="uid://dfuouenee8xii" path="res://substance/02.png" id="3_y51ly"]
+[ext_resource type="Texture2D" uid="uid://dnk2x1jwjxnl0" path="res://substance/03.png" id="4_p2q3i"]
+[ext_resource type="Texture2D" uid="uid://4r1rbr5fyf5v" path="res://substance/04.png" id="5_vy8no"]
+[ext_resource type="Texture2D" uid="uid://bvlws5ec07rq0" path="res://substance/05.png" id="6_fxnga"]
+[ext_resource type="Texture2D" uid="uid://cvg00j27hgrmb" path="res://substance/06.png" id="7_2700p"]
+[ext_resource type="Texture2D" uid="uid://br51i17bscate" path="res://substance/07.png" id="8_ai24e"]
+[ext_resource type="Texture2D" uid="uid://dpy2birjkmg3m" path="res://substance/08.png" id="9_j4fkb"]
+[ext_resource type="Texture2D" uid="uid://cwo0e0vhllnu7" path="res://substance/09.png" id="10_b5set"]
+[ext_resource type="Texture2D" uid="uid://4hv3p3qtti2x" path="res://substance/10.png" id="11_68fp6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lm8d5"]
+size = Vector2(68, 52)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2pk01"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_r5501")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_y51ly")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_p2q3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vy8no")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fxnga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2700p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ai24e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_j4fkb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_b5set")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_68fp6")
+}],
+"loop": false,
+"name": &"new_animation",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_evcoy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer:speed_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0oauw"]
+resource_name = "idle"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"new_frame"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1s4vl"]
+resource_name = "pickup"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer:speed_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [10.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.39, 0.39, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0brp6"]
+_data = {
+"RESET": SubResource("Animation_evcoy"),
+"idle": SubResource("Animation_0oauw"),
+"pickup": SubResource("Animation_1s4vl")
+}
+
+[node name="substance" type="Node2D"]
+metadata/MIN_WPHONES = 0
+metadata/MIN_VISTAS = 0
+
+[node name="onscreen" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-35, -30, 70, 65)
+enable_node_path = NodePath("../Area2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_0biny")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 7.295)
+shape = SubResource("RectangleShape2D_lm8d5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+sprite_frames = SubResource("SpriteFrames_2pk01")
+animation = &"new_animation"
+frame = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D"]
+libraries = {
+"": SubResource("AnimationLibrary_0brp6")
+}
+autoplay = "idle"
+
+[connection signal="screen_entered" from="onscreen" to="Area2D" method="_on_onscreen_screen_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
