@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 	
 	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, substance_steady)
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire:
 		fire()
 	
 	if cam_zoom_override == 0:
@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		cam_zoom_target = cam_zoom_override
 	
-	cam_zoom_current = lerpf(cam_zoom_current, cam_zoom_target, 0.01)
+	cam_zoom_current = clampf(lerpf(cam_zoom_current, cam_zoom_target, 0.005), 0.25, 1.75)
 	n_camera.zoom = Vector2(cam_zoom_current, cam_zoom_current)
 	n_timerlabel.text = Time.get_time_string_from_unix_time(Time.get_ticks_msec() / 1000)
 	if ballmer_on_crack:

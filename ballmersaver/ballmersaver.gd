@@ -15,7 +15,9 @@ func _physics_process(delta: float) -> void:
 		anim.play("ballmersaved")
 
 func go_to_player():
-	path.get_curve().set_point_position(0, player_node.global_position - position - Vector2(0,125))
+	path.get_curve().set_point_position(0, player_node.global_position - position - Vector2(0,100))
+	path.get_curve().set_point_position(1, player_node.global_position - position + Vector2(0,1000))
+
 
 func reset_zoom_override():
 	player_node.cam_zoom_override = 0
