@@ -6,7 +6,7 @@ var spriteframe : int
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "player":
 		if !body.ballmer_on_crack:
-			body.substance_pickup()
+			gv.playernode.substance_pickup()
 			$AnimationPlayer.play("pickup")
 
 func new_frame():

@@ -339,7 +339,7 @@ forward={
 [layer_names]
 
 2d_physics/layer_1="world"
-2d_physics/layer_2="everything else"
+2d_physics/layer_2="doors"
 
 [rendering]
 

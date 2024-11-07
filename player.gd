@@ -15,14 +15,19 @@ var cam_zoom_current : float = 1
 var cam_zoom_override : float = 0 
 
 var b2loaded : bool = true
+var tuxbattle : bool = false
 
 @export var ballmer_on_crack : bool = false
-@export var substance_steady : float = 0.95
+@export var aim_steady : float = 0.95
+@export var sprite_shake : float = 0
 @onready var substance_anim : AnimationPlayer = $substance
+
+func _ready() -> void:
+	gv.playernode = self
 
 func _physics_process(delta: float) -> void:
 	
-	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, substance_steady)
+	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, aim_steady)
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire:
 		fire()
@@ -36,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	n_camera.zoom = Vector2(cam_zoom_current, cam_zoom_current)
 	n_timerlabel.text = Time.get_time_string_from_unix_time(Time.get_ticks_msec() / 1000)
 	if ballmer_on_crack:
-		n_sprite.offset = Vector2(randf_range(-1,1),randf_range(-1,1))
+		n_sprite.offset = Vector2(randf_range(-sprite_shake,sprite_shake),randf_range(-sprite_shake,sprite_shake))
 
 func fire() -> void:
 	apply_central_impulse((n_vec.global_position - global_position)*75)
@@ -54,4 +59,10 @@ func fire() -> void:
 		b2loaded = true
 
 func substance_pickup():
-	substance_anim.play("new_animation")
+	if tuxbattle:
+		n_sprite.frame = 1
+		gravity_scale = 0.5
+		ballmer_on_crack = true
+		aim_steady = 0.75
+	else:
+		substance_anim.play("new_animation")

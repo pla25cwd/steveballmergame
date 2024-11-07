@@ -1,5 +1,7 @@
 extends Node
 
-var wphones : int = 0
-var vistas : int = 0
+var wphones : int = 7
+var vistas : int = 11
 var can_fire = true
+
+var playernode : RigidBody2D

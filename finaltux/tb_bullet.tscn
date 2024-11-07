@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://byjq1g3irogpv"]
+
+[ext_resource type="Script" path="res://finaltux/tb_bullet.gd" id="1_en0hu"]
+[ext_resource type="Texture2D" uid="uid://52qy4m4kdq54" path="res://finaltux/bullets.png" id="2_8318a"]
+[ext_resource type="Texture2D" uid="uid://dav056tvnqho2" path="res://finaltux/explosiona.png" id="3_3xoq4"]
+
+[node name="tb_bullet" type="Node2D"]
+script = ExtResource("1_en0hu")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(15, 0)
+hit_from_inside = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8318a")
+hframes = 2
+vframes = 2
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_3xoq4")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
