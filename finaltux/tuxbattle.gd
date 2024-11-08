@@ -11,6 +11,7 @@ extends Node2D
 var spawn_frame
 var spawn_i
 var spawn_amount
+var spawn_homing
 var spawn_tmp_node
 
 const atk_anims : Array = ["atk","atk_2","atk_3"]
@@ -36,26 +37,26 @@ func _on_atk_timeout() -> void:
 		spawn_amount = randi_range(1,3) + stage
 		sprite.frame = 1
 		spawn_i = 0
+		if stage == 1:
+			spawn_homing = bool(randi_range(0,1))
+		else:
+			spawn_homing = false
 		atk_spawn_timer.stop()
 		atk_spawn_timer.start(1)
 
 func _on_atk_spawn_timeout() -> void:
 	if !can_atk:
 		return
-	
-	print(str(spawn_i) + "   " + str(spawn_amount))
+
 	if spawn_i < spawn_amount:
 		spawn_i += 1
 		spawn_tmp_node = preload("res://finaltux/tb_bullet.tscn").instantiate()
 		spawn_tmp_node.frame = spawn_frame
-		if stage == 1:
-			spawn_tmp_node.homing = bool(randf())
-		else:
-			spawn_tmp_node.homing = false
+		spawn_tmp_node.homing = spawn_homing
 		add_child(spawn_tmp_node)
 		spawn_tmp_node.position = Vector2(0, 200)
 		spawn_tmp_node.activate()
-		spawn_tmp_node.rotation_degrees += randf_range(1,3)-stage
+		spawn_tmp_node.rotation_degrees += randf_range(1,2)-stage
 		atk_spawn_timer.start(0.3)
 	elif spawn_i == spawn_amount:
 		spawn_i += 1
@@ -65,11 +66,13 @@ func _on_atk_spawn_timeout() -> void:
 			sprite.frame = 0
 		match spawn_amount:
 			1:
-				atk_timer.start(randf_range(1,2)-stage)
+				atk_timer.start(randf_range(1,2))
 			2:
-				atk_timer.start(randf_range(3,4)-stage)
+				atk_timer.start(randf_range(3,4)-(stage*2))
 			3:
-				atk_timer.start(randf_range(4,5)-stage)
+				atk_timer.start(randf_range(4,5)-(stage*2))
+			4:
+				atk_timer.start(randf_range(4,5)-(stage*2))
 
 func _on_button_body_entered(body: Node2D) -> void:
 	if body.name == "player":
@@ -85,7 +88,8 @@ func change_stage(vstage):
 func _on_tuxler_coll_body_entered(body: Node2D) -> void:
 	if body.name.begins_with("tb_dropobjects"):
 		body.die()
-		if stage == 0:
+		if stage == 0 and !body.vista:
+			print("hitwp")
 			tux_anim.play("hit_wphones")
-		elif stage == 1:
+		elif stage == 1 and body.vista:
 			tux_anim.play("hit_vista")

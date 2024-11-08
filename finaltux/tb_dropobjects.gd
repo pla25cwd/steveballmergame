@@ -13,7 +13,8 @@ func _on_timer_timeout() -> void:
 	queue_free()
 
 func die():
-	freeze = true # TODO: magically doesnt work
+	$CollisionShape2D.set_deferred("disabled", true)
+	set_deferred("freeze", true)
 	$Sprite2D2.visible = true
 	$Sprite2D.visible = false
 	$Timer.start()
