@@ -28,7 +28,7 @@ func _on_arena_body_entered(body: Node2D) -> void:
 func _on_arena_body_exited(body: Node2D) -> void:
 	if body.name == "player":
 		gv.playernode.n_camera.top_level = false
-		gv.playernode.cam_zoom_override = 0
+		gv.playernode.cam_zoom_override = 1
 		gv.playernode.n_camera.position = Vector2.ZERO
 
 func _on_atk_timeout() -> void:
@@ -93,3 +93,15 @@ func _on_tuxler_coll_body_entered(body: Node2D) -> void:
 			tux_anim.play("hit_wphones")
 		elif stage == 1 and body.vista:
 			tux_anim.play("hit_vista")
+
+
+func _on_tunnelstart_body_entered(body: Node2D) -> void:
+	if body.name == "player":
+		gv.playernode.gravity_scale = -0.1
+		$end/endscreen/camerahandler.active = true
+		gv.playernode.n_camera.top_level = true
+		gv.playernode.n_camera.global_position.x = -5390
+
+func _on_tunnelrailactivator_body_entered(body: Node2D) -> void:
+	if body.name == "player":
+		pass

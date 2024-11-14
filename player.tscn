@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dx634x4eyog24"]
+[gd_scene load_steps=33 format=3 uid="uid://dx634x4eyog24"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_dh8lc"]
 [ext_resource type="Texture2D" uid="uid://bla1l71mxkd86" path="res://stefan.png" id="2_lu3se"]
@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://bnyjyud1lm04" path="res://flash.png" id="4_vjfl2"]
 [ext_resource type="AudioStream" uid="uid://br37657ufklm2" path="res://sg2.ogg" id="5_jjfgj"]
 [ext_resource type="AudioStream" uid="uid://bjw21pmm3ck2i" path="res://sg_load_2.ogg" id="7_nmoax"]
+[ext_resource type="AudioStream" uid="uid://bsbtubwtvwkoq" path="res://sg3.ogg" id="8_ni588"]
+[ext_resource type="AudioStream" uid="uid://c5r0ieuc7sikp" path="res://sg4.ogg" id="9_bhbx1"]
+[ext_resource type="AudioStream" uid="uid://bpmlj87kv6w2a" path="res://thud.ogg" id="9_wlwem"]
+[ext_resource type="AudioStream" uid="uid://eh1saymgq3e1" path="res://sg5.ogg" id="10_6ftih"]
+[ext_resource type="AudioStream" uid="uid://bw7ylcvdpyp12" path="res://sg6.ogg" id="11_a54he"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gh04u"]
 animations = [{
@@ -96,13 +101,16 @@ tracks/1/keys = {
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wxppn"]
 random_pitch = 1.1
-streams_count = 2
+streams_count = 6
 stream_0/stream = ExtResource("4_fwirn")
 stream_1/stream = ExtResource("5_jjfgj")
+stream_2/stream = ExtResource("8_ni588")
+stream_3/stream = ExtResource("9_bhbx1")
+stream_4/stream = ExtResource("10_6ftih")
+stream_5/stream = ExtResource("11_a54he")
 
 [sub_resource type="Animation" id="Animation_a715g"]
 resource_name = "b2"
-length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -193,6 +201,8 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_3veil"]
 font_size = 32
 
+[sub_resource type="LabelSettings" id="LabelSettings_22t60"]
+
 [sub_resource type="Animation" id="Animation_b3lio"]
 length = 0.001
 tracks/0/type = "value"
@@ -222,46 +232,34 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:gravity_scale")
+tracks/2/path = NodePath(".:aim_steady")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [0.95]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:aim_steady")
+tracks/3/path = NodePath(".:sprite_shake")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.95]
+"values": [0.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath(".:sprite_shake")
+tracks/4/path = NodePath(".:ballmer_on_crack")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".:ballmer_on_crack")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -296,25 +294,13 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:gravity_scale")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 3, 10),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.5, 0.5, 1.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(10),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -322,37 +308,37 @@ tracks/3/keys = {
 "method": &"apply_torque_impulse"
 }]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:ballmer_on_crack")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:ballmer_on_crack")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 10),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".:aim_steady")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:aim_steady")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0, 10),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.75, 0.95]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".:sprite_shake")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:sprite_shake")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0, 3, 10),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
@@ -364,6 +350,11 @@ _data = {
 "RESET": SubResource("Animation_b3lio"),
 "new_animation": SubResource("Animation_mxk5o")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_35epx"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("9_wlwem")
 
 [node name="player" type="RigidBody2D"]
 collision_layer = 3
@@ -407,6 +398,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -438,6 +430,19 @@ label_settings = SubResource("LabelSettings_3veil")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="subtitle" type="Label" parent="CanvasLayer2/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_22t60")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="substance" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8rtql")
@@ -445,3 +450,6 @@ libraries = {
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
+
+[node name="thud" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_35epx")

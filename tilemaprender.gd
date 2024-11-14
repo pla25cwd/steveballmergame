@@ -27,7 +27,8 @@ func _ready() -> void:
 			print("waiting " + str(Time.get_ticks_msec()))
 			await RenderingServer.frame_post_draw
 			print("done waiting " + str(Time.get_ticks_msec()))
-			camera.get_viewport().get_texture().get_image().save_png(save_location + "/render_" + str(y) + "c" + str(x) + ".png") # format string? what the fuck is that?
+			camera.get_viewport().get_texture().get_image().save_png(save_location + "/render_" + str(y) + "c" + str(x) + ".png")
+			# format string? what the fuck is that?
 			
 	print("steps x: " + str(cpm_steps.x) + " steps y: " + str(cpm_steps.y))
 

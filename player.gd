@@ -12,10 +12,15 @@ extends RigidBody2D
 
 var cam_zoom_target : float
 var cam_zoom_current : float = 1
-var cam_zoom_override : float = 0 
+var cam_zoom_override : float = 0
 
 var b2loaded : bool = true
 var tuxbattle : bool = false
+
+var vel_previous = 0
+@onready var thud = $thud
+
+var timer_offset = 0
 
 @export var ballmer_on_crack : bool = false
 @export var aim_steady : float = 0.95
@@ -24,22 +29,27 @@ var tuxbattle : bool = false
 
 func _ready() -> void:
 	gv.playernode = self
+	n_timerlabel.visible = false
 
 func _physics_process(delta: float) -> void:
-	
 	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, aim_steady)
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire:
 		fire()
 	
 	if cam_zoom_override == 0:
-		cam_zoom_target = remap(linear_velocity.length(), 0.0, 1000.0, 1.75, 0.25)
+		cam_zoom_target = remap(linear_velocity.length(), 0.0, 1000.0, 1.25, 0.25)
 	else:
 		cam_zoom_target = cam_zoom_override
+
+	if (vel_previous-linear_velocity.length()) > 800:
+		thud.play()
+	vel_previous = linear_velocity.length()
+
 	
 	cam_zoom_current = clampf(lerpf(cam_zoom_current, cam_zoom_target, 0.005), 0.25, 1.75)
 	n_camera.zoom = Vector2(cam_zoom_current, cam_zoom_current)
-	n_timerlabel.text = Time.get_time_string_from_unix_time(Time.get_ticks_msec() / 1000)
+	n_timerlabel.text = Time.get_time_string_from_unix_time((Time.get_ticks_msec() - timer_offset)/ 1000)
 	if ballmer_on_crack:
 		n_sprite.offset = Vector2(randf_range(-sprite_shake,sprite_shake),randf_range(-sprite_shake,sprite_shake))
 
@@ -49,6 +59,7 @@ func fire() -> void:
 	n_flash.skew = randf_range(-25,25)
 	n_flash.rotation_degrees = randf_range(-10,10)
 	n_flash.frame = randi_range(0,1)
+	n_flashanim.stop()
 	if b2loaded or ballmer_on_crack:
 		n_flashanim.play("b2")
 		n_timer.start(0.5)
@@ -66,3 +77,9 @@ func substance_pickup():
 		aim_steady = 0.75
 	else:
 		substance_anim.play("new_animation")
+
+func exit_spawn():
+	timer_offset = Time.get_ticks_msec()
+	n_timerlabel.visible = true
+	n_camera.limit_bottom = 10000000
+	cam_zoom_override = 0

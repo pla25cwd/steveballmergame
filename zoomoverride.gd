@@ -9,7 +9,7 @@ extends Node2D
 @export var zoom_amount : float = 1
 
 func update_coll(shape):
-	if $Area2D2/CollisionShape2D != null:
+	if get_child_count() != 0:
 		$Area2D2/CollisionShape2D.shape = shape
 		
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
