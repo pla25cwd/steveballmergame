@@ -20,8 +20,6 @@ var tuxbattle : bool = false
 var vel_previous = 0
 @onready var thud = $thud
 
-var timer_offset = 0
-
 @export var ballmer_on_crack : bool = false
 @export var aim_steady : float = 0.95
 @export var sprite_shake : float = 0
@@ -49,7 +47,9 @@ func _physics_process(delta: float) -> void:
 	
 	cam_zoom_current = clampf(lerpf(cam_zoom_current, cam_zoom_target, 0.005), 0.25, 1.75)
 	n_camera.zoom = Vector2(cam_zoom_current, cam_zoom_current)
-	n_timerlabel.text = Time.get_time_string_from_unix_time((Time.get_ticks_msec() - timer_offset)/ 1000)
+	if gtime.active:
+		n_timerlabel.text = Time.get_time_string_from_unix_time(gtime.value/ 1000)
+		
 	if ballmer_on_crack:
 		n_sprite.offset = Vector2(randf_range(-sprite_shake,sprite_shake),randf_range(-sprite_shake,sprite_shake))
 
@@ -64,10 +64,12 @@ func fire() -> void:
 		n_flashanim.play("b2")
 		n_timer.start(0.5)
 		b2loaded = false
+		gv.shots_fired += 1
 	else:
 		n_flashanim.play("new_animation")
 		n_timer.start(2)
 		b2loaded = true
+		gv.shots_fired += 1
 
 func substance_pickup():
 	if tuxbattle:
@@ -79,7 +81,7 @@ func substance_pickup():
 		substance_anim.play("new_animation")
 
 func exit_spawn():
-	timer_offset = Time.get_ticks_msec()
+	gtime.start()
 	n_timerlabel.visible = true
 	n_camera.limit_bottom = 10000000
 	cam_zoom_override = 0

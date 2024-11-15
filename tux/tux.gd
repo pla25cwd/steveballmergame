@@ -8,5 +8,5 @@ func _on_body_entered(body: Node) -> void:
 		anim.play("new_animation")
 
 func _on_onscreen_screen_entered() -> void:
-	self.process_mode = PROCESS_MODE_ALWAYS
+	self.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$onscreen.enable_node_path = ""

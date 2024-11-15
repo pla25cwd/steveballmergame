@@ -93,15 +93,3 @@ func _on_tuxler_coll_body_entered(body: Node2D) -> void:
 			tux_anim.play("hit_wphones")
 		elif stage == 1 and body.vista:
 			tux_anim.play("hit_vista")
-
-
-func _on_tunnelstart_body_entered(body: Node2D) -> void:
-	if body.name == "player":
-		gv.playernode.gravity_scale = -0.1
-		$end/endscreen/camerahandler.active = true
-		gv.playernode.n_camera.top_level = true
-		gv.playernode.n_camera.global_position.x = -5390
-
-func _on_tunnelrailactivator_body_entered(body: Node2D) -> void:
-	if body.name == "player":
-		pass
