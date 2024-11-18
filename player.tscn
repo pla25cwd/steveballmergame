@@ -1,12 +1,14 @@
-[gd_scene load_steps=33 format=3 uid="uid://dx634x4eyog24"]
+[gd_scene load_steps=35 format=3 uid="uid://dx634x4eyog24"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_dh8lc"]
 [ext_resource type="Texture2D" uid="uid://bla1l71mxkd86" path="res://stefan.png" id="2_lu3se"]
 [ext_resource type="Texture2D" uid="uid://bsxj865qjq0xw" path="res://sg2.png" id="3_5qmtv"]
 [ext_resource type="Texture2D" uid="uid://cnr0tav72pfh8" path="res://stefan2.png" id="3_8lupb"]
+[ext_resource type="Texture2D" uid="uid://c073udtiihlol" path="res://hat.png" id="4_55irv"]
 [ext_resource type="AudioStream" uid="uid://dw8fc5iub308u" path="res://sg1.ogg" id="4_fwirn"]
 [ext_resource type="Texture2D" uid="uid://bnyjyud1lm04" path="res://flash.png" id="4_vjfl2"]
 [ext_resource type="AudioStream" uid="uid://br37657ufklm2" path="res://sg2.ogg" id="5_jjfgj"]
+[ext_resource type="Script" path="res://christmassator.gd" id="5_qa2os"]
 [ext_resource type="AudioStream" uid="uid://bjw21pmm3ck2i" path="res://sg_load_2.ogg" id="7_nmoax"]
 [ext_resource type="AudioStream" uid="uid://bsbtubwtvwkoq" path="res://sg3.ogg" id="8_ni588"]
 [ext_resource type="AudioStream" uid="uid://c5r0ieuc7sikp" path="res://sg4.ogg" id="9_bhbx1"]
@@ -365,6 +367,12 @@ script = ExtResource("1_dh8lc")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gh04u")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" groups=["christmassiers"]]
+position = Vector2(-2, -15)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_55irv")
+script = ExtResource("5_qa2os")
 
 [node name="rotation" type="Node2D" parent="."]
 

@@ -32,7 +32,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, aim_steady)
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire and !gv.nh_open:
 		fire()
 	
 	if cam_zoom_override == 0:

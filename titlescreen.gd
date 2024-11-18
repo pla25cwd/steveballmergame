@@ -6,6 +6,7 @@ var file
 var line
 
 func _ready() -> void:
+	
 	$complaint.visible = false
 	$complaint2.visible = false
 	

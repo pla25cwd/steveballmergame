@@ -75,27 +75,3 @@ func _on_spawntimer_timeout() -> void:
 	spawner.add_child(es_collider)
 	es_collider.apply_central_impulse(Vector2(randf_range(-10,10), -250))
 	spawntimer.start(1)
-
-
-func _on_button_pressed() -> void:
-	var req : Dictionary = {}
-	var req_image = get_viewport().get_texture().get_image()
-	req["time"] = gtime.value / 1000
-	req["shots"] = gv.shots_fired
-	req["wphones"] = gv.wphones
-	req["vistas"] = gv.vistas
-	req["award"] = $Sprite2D/Control/MarginContainer/VBoxContainer/VBoxContainer4/awardlabel.text
-	req["image_data"] = Array(req_image.save_png_to_buffer())
-	req["image_width"] = req_image.get_width()
-	req["image_height"] = req_image.get_height()
-	req["image_format"] = req_image.get_format()
-	req["unixtime"] = roundi(Time.get_unix_time_from_system())
-	
-	var req_body = JSON.stringify(req)
-	var http_request = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request("http://172.16.139.69:5000/results", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
-
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("forward"):
-		_on_button_pressed()

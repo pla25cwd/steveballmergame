@@ -1,0 +1,112 @@
+[gd_scene load_steps=8 format=3 uid="uid://bohqa1jf0frps"]
+
+[ext_resource type="Script" path="res://nethand.gd" id="1_2lepl"]
+[ext_resource type="Texture2D" uid="uid://dmrmjt1xghq3l" path="res://711.png" id="2_ieul5"]
+[ext_resource type="AudioStream" uid="uid://b357q2cfkid1i" path="res://notify.wav" id="3_pcg3t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6eire"]
+
+[sub_resource type="FontVariation" id="FontVariation_v4epv"]
+variation_transform = Transform2D(0.615, 0, 0, 1.225, 0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mpubs"]
+font = SubResource("FontVariation_v4epv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3laqo"]
+bg_color = Color(0, 0, 0, 0.34902)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+
+[node name="nethand" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_2lepl")
+
+[node name="feedback" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="http_feedback" type="HTTPRequest" parent="feedback"]
+
+[node name="PanelContainer" type="PanelContainer" parent="feedback"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6eire")
+
+[node name="TextureRect" type="TextureRect" parent="feedback/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("2_ieul5")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="feedback/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="feedback/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TextureRect" type="TextureRect" parent="feedback/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="feedback/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "by sending feedback you agree to purchase all future 
+25TH CYBERWARFARE DIVISION 
+products under penalty of death"
+label_settings = SubResource("LabelSettings_mpubs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="feedback_le" type="LineEdit" parent="feedback/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_3laqo")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3laqo")
+placeholder_text = "funny placeholder goes here"
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+clear_button_enabled = true
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+caret_blink = true
+caret_force_displayed = true
+
+[node name="results" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HTTPRequest" type="HTTPRequest" parent="results"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pcg3t")
+
+[connection signal="gui_input" from="feedback/PanelContainer/MarginContainer/VBoxContainer/feedback_le" to="." method="_on_feedback_le_gui_input"]
