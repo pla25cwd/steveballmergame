@@ -10,3 +10,6 @@ func _on_body_entered(body: Node) -> void:
 func _on_onscreen_screen_entered() -> void:
 	self.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$onscreen.enable_node_path = ""
+
+func c_activate():
+	$Sprite2D3.visible = true

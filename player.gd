@@ -25,9 +25,12 @@ var vel_previous = 0
 @export var sprite_shake : float = 0
 @onready var substance_anim : AnimationPlayer = $substance
 
+var db_save : Vector2
+
 func _ready() -> void:
 	gv.playernode = self
 	n_timerlabel.visible = false
+	gtime.start()
 
 func _physics_process(delta: float) -> void:
 	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, aim_steady)
@@ -60,6 +63,7 @@ func fire() -> void:
 	n_flash.rotation_degrees = randf_range(-10,10)
 	n_flash.frame = randi_range(0,1)
 	n_flashanim.stop()
+	gv.nethand.replay_fc = true
 	if b2loaded or ballmer_on_crack:
 		n_flashanim.play("b2")
 		n_timer.start(0.5)
@@ -85,3 +89,12 @@ func exit_spawn():
 	n_timerlabel.visible = true
 	n_camera.limit_bottom = 10000000
 	cam_zoom_override = 0
+
+func _input(event: InputEvent) -> void:
+	if OS.has_feature("editor"):
+		if Input.is_action_just_pressed("db1"):
+			db_save = position
+		if Input.is_action_just_pressed("db2"):
+			freeze = true
+			set_deferred("position", db_save)
+			freeze = false

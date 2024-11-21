@@ -17,8 +17,8 @@ var spawn_tmp_node
 const atk_anims : Array = ["atk","atk_2","atk_3"]
 
 func _on_arena_body_entered(body: Node2D) -> void:
-	if body.name == "player":
-		can_atk = true
+	if body.name == "player" and !gv.playernode.tuxbattle:
+		$tux_anim.play("enter")
 		gv.playernode.tuxbattle = true
 		gv.playernode.n_camera.top_level = true
 		gv.playernode.cam_zoom_override = 0.75
@@ -27,6 +27,7 @@ func _on_arena_body_entered(body: Node2D) -> void:
 		
 func _on_arena_body_exited(body: Node2D) -> void:
 	if body.name == "player":
+		gv.playernode.n_camera.position_smoothing_speed = 0.1
 		gv.playernode.n_camera.top_level = false
 		gv.playernode.cam_zoom_override = 1
 		gv.playernode.n_camera.position = Vector2.ZERO
@@ -47,6 +48,8 @@ func _on_atk_timeout() -> void:
 func _on_atk_spawn_timeout() -> void:
 	if !can_atk:
 		return
+	if spawn_i == 0:
+		$fire.play()
 
 	if spawn_i < spawn_amount:
 		spawn_i += 1
@@ -93,3 +96,10 @@ func _on_tuxler_coll_body_entered(body: Node2D) -> void:
 			tux_anim.play("hit_wphones")
 		elif stage == 1 and body.vista:
 			tux_anim.play("hit_vista")
+
+func c_activate():
+	$tuxler/Sprite2D2.visible = true
+
+
+func _on_ray_cast_2d_body_entered(body: Node2D) -> void:
+	$carrier/AnimationPlayer.play("new_animation")

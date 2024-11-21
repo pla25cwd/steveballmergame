@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://br4ef8tmlfjhm"]
+[gd_scene load_steps=10 format=3 uid="uid://br4ef8tmlfjhm"]
 
 [ext_resource type="Texture2D" uid="uid://c2jnstx218eyp" path="res://tux/tux.png" id="1_x06v2"]
 [ext_resource type="Script" path="res://tux/tux.gd" id="1_x8apy"]
 [ext_resource type="Texture2D" uid="uid://c2t2sevg3hhi5" path="res://tux/tux2.png" id="3_kkkld"]
+[ext_resource type="Texture2D" uid="uid://c073udtiihlol" path="res://hat.png" id="4_wq8bc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l8kvh"]
 friction = 0.3
@@ -48,7 +49,7 @@ _data = {
 
 [node name="tux" type="Node2D"]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["christmassiers"]]
 process_mode = 4
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_l8kvh")
@@ -79,6 +80,13 @@ texture = ExtResource("3_kkkld")
 libraries = {
 "": SubResource("AnimationLibrary_tfp0y")
 }
+
+[node name="Sprite2D3" type="Sprite2D" parent="RigidBody2D"]
+visible = false
+position = Vector2(-20, -71)
+rotation = 0.0866575
+scale = Vector2(1.91, 0.74)
+texture = ExtResource("4_wq8bc")
 
 [connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_entered"]
 [connection signal="screen_entered" from="RigidBody2D/onscreen" to="RigidBody2D" method="_on_onscreen_screen_entered"]

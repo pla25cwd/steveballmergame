@@ -8,9 +8,9 @@ func _ready() -> void:
 	noise = get_texture().get_noise()
 	visible = false
 	if Time.get_date_dict_from_system()["month"] == 12:
-		get_tree().call_group("christmassiers", "activate")
+		get_tree().call_group("christmassiers", "c_activate")
 
-func activate():
+func c_activate():
 	visible = true
 
 func _physics_process(delta: float) -> void:

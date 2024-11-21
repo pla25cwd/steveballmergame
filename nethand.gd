@@ -3,6 +3,10 @@ extends CanvasLayer
 var req
 var req_body
 
+var replay : Array[Transform2D] # (x,y),(player_rot,gun_rot),(fired, reserved)
+var replay_tmpvc : Transform2D
+var replay_fc : bool = false # check if player fired
+
 @onready var feedback = $feedback
 @onready var http_feedback = $feedback/http_feedback
 @onready var feedback_le = $feedback/PanelContainer/MarginContainer/VBoxContainer/feedback_le
@@ -44,7 +48,10 @@ func _input(event: InputEvent) -> void:
 func _on_feedback_le_gui_input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
 		if feedback_le.text == "chrimbus":
-			get_tree().call_group("christmassiers", "activate")
+			get_tree().call_group("christmassiers", "c_activate")
+		if feedback_le.text == "aGFubmFobW9udGFuYWxpbnV4Cg":
+			pass # activate ssg
+			
 		feedback_le.text = ""
 		feedback.visible = false
 		gv.nh_open = false
@@ -63,3 +70,12 @@ func _on_button_pressed() -> void:
 	feedback_le.text = ""
 	feedback.visible = false
 	gv.nh_open = false
+
+
+func _on_timer_timeout() -> void:
+	replay_tmpvc = Transform2D()
+	replay_tmpvc.x = Vector2(gv.playernode.global_position.x,gv.playernode.global_position.y)
+	replay_tmpvc.y = Vector2(gv.playernode.rotation_degrees, gv.playernode.n_rotation.rotation_degrees)
+	replay_tmpvc.origin = Vector2(int(replay_fc),0)
+	replay_fc = false
+	replay.append(replay_tmpvc)

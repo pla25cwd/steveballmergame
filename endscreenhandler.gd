@@ -3,7 +3,7 @@ extends Node2D
 var cam_active = false # free spaghet
 var count_active = false
 var count_progress : float = 0
-var awards : PackedStringArray = ["a free car (1991 toyota corolla)", "a trip to kabul disneyland", "free tuition at pyongyang university", "cancer", ""]
+var awards : PackedStringArray = ["a free car (1991 toyota corolla)", "a trip to kabul disneyland", "free tuition at pyongyang university", "cancer"]
 
 @onready var timelabel = $Sprite2D/Control/MarginContainer/VBoxContainer/VBoxContainer/timelabel
 @onready var shotslabel = $Sprite2D/Control/MarginContainer/VBoxContainer/VBoxContainer2/shotslabel
@@ -18,8 +18,8 @@ const es_collider_types = ["ballmer", "vista", "wphone"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	gv.playernode.n_camera.position_smoothing_speed = lerpf(gv.playernode.n_camera.position_smoothing_speed, 50, 0.0005)
 	if cam_active:
+		gv.playernode.n_camera.position_smoothing_speed = lerpf(gv.playernode.n_camera.position_smoothing_speed, 50, 0.0005)
 		if gv.playernode.n_camera.global_position.y > -12223:
 			gv.playernode.n_camera.global_position.y = gv.playernode.global_position.y
 		elif gv.playernode.n_camera.global_position.y < -12223:
@@ -61,7 +61,6 @@ func _on_tunnelend_body_entered(body: Node2D) -> void:
 		gv.playernode.n_timerlabel.visible = false
 
 	if body.name == "es_collider":
-		print("es cleared")
 		body.queue_free()
 
 
