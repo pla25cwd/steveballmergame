@@ -28,7 +28,9 @@ var vel_previous = 0
 var db_save : Vector2
 
 func _ready() -> void:
-	gv.playernode = self
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	if gv.playernode == null:
+		gv.playernode = self
 	n_timerlabel.visible = false
 	gtime.start()
 

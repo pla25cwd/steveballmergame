@@ -15,3 +15,4 @@ func start():
 	
 func stop():
 	active = false
+	gv.nethand.finish_replay()

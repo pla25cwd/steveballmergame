@@ -3,7 +3,12 @@ extends CanvasLayer
 var req
 var req_body
 
-var replay : Array[Transform2D] # (x,y),(player_rot,gun_rot),(fired, reserved)
+# first element in replay array contains replay info:
+# (frame_time, reserved),(reserved, reserved),(reserved, reserved)
+#
+# rest is frame information
+# (x,y),(player_rot,gun_rot),(fired, reserved)
+var replay : Array[Transform2D] = [Transform2D(Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)]
 var replay_tmpvc : Transform2D
 var replay_fc : bool = false # check if player fired
 
@@ -49,8 +54,6 @@ func _on_feedback_le_gui_input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
 		if feedback_le.text == "chrimbus":
 			get_tree().call_group("christmassiers", "c_activate")
-		if feedback_le.text == "aGFubmFobW9udGFuYWxpbnV4Cg":
-			pass # activate ssg
 			
 		feedback_le.text = ""
 		feedback.visible = false
@@ -79,3 +82,23 @@ func _on_timer_timeout() -> void:
 	replay_tmpvc.origin = Vector2(int(replay_fc),0)
 	replay_fc = false
 	replay.append(replay_tmpvc)
+
+func finish_replay():
+	$Timer.stop()
+	replay[0] = Transform2D(Vector2(0.1,0),Vector2.ZERO, Vector2.ZERO)
+	
+func save_replayfile(filepath):
+	var file = FileAccess.open(filepath, FileAccess.WRITE)
+	file.store_string(str(replay))
+	
+func upload_replayfile(name):
+	req = {}
+	req["replay"] = str(replay)
+	req["name"] = name
+	req["wphones"] = gv.wphones
+	req["vistas"] = gv.vistas
+	req["time"] = gtime.value
+	req["unixtime"] = roundi(Time.get_unix_time_from_system())
+	
+	req_body = JSON.stringify(req)
+	http_feedback.request("http://172.16.139.69:5000/upload", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)

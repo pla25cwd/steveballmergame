@@ -1,0 +1,119 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpuomem3bxvrd"]
+
+[ext_resource type="Script" path="res://es_upload.gd" id="1_1r52y"]
+[ext_resource type="Texture2D" uid="uid://cwk043sn43wji" path="res://FileDialog.png" id="2_towul"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4h4hm"]
+font_size = 24
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1r52y")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Replay / Leaderboard thing"
+label_settings = SubResource("LabelSettings_4h4hm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "you can upload your time and score to the [url={https://172.16.139.69/sbgamerangliste]leaderboard[/url], and itll eventually show up there whenever i get around to doing it manually i guess
+
+you can watch a replay file by pressing F6
+
+any data you upload will be forwarded to SHENZEN HEAVY INDUSTRIES corporation for our non-mutual profit"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "save replay to file	 "
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("2_towul")
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "upload to server   "
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+placeholder_text = "enter some name (required)"
+max_length = 25
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "upload / save"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+size = Vector2i(460, 180)
+access = 2
+filters = PackedStringArray("*.msreplay;Michealsoft Secure Replay Format 2003")
+use_native_dialog = true
+
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/Button" to="." method="_on_dbutton_pressed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer2/CheckButton" to="." method="_on_n_check_button_toggled"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/LineEdit" to="." method="_on_line_edit_gui_input"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_sbutton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

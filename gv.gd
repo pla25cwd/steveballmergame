@@ -9,3 +9,10 @@ var shots_fired : int = 0
 var playernode : RigidBody2D
 var audiohandler : Node
 var nethand : CanvasLayer
+
+func init_replayviewer(filepath : String):
+	pass
+	# reload scene
+	# delete playernode
+	# add replayviewer
+	# load filepath with replayviewer

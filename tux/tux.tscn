@@ -51,6 +51,9 @@ _data = {
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." groups=["christmassiers"]]
 process_mode = 4
+z_index = 1
+collision_layer = 65537
+collision_mask = 65537
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_l8kvh")
 can_sleep = false
