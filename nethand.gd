@@ -3,14 +3,9 @@ extends CanvasLayer
 var req
 var req_body
 
-# first element in replay array contains replay info:
-# (frame_time, reserved),(reserved, reserved),(reserved, reserved)
-#
-# rest is frame information
-# (x,y),(player_rot,gun_rot),(fired, reserved)
-var replay : Array[Transform2D] = [Transform2D(Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)]
-var replay_tmpvc : Transform2D
-var replay_fc : bool = false # check if player fired
+var replay : PackedVector4Array = [Vector4.ZERO] # mouse pos x, mouse pos y, frame n, reserved
+var replay_active = true
+var replay_tmpvec
 
 @onready var feedback = $feedback
 @onready var http_feedback = $feedback/http_feedback
@@ -55,6 +50,13 @@ func _on_feedback_le_gui_input(event: InputEvent) -> void:
 		if feedback_le.text == "chrimbus":
 			get_tree().call_group("christmassiers", "c_activate")
 			
+		if feedback_le.text == "zumkotzn":
+			gv.playernode.n_camera.ignore_rotation = false
+			gv.playernode.n_camera.position_smoothing_enabled = false
+			
+		if feedback_le.text == "debug_rplsv":
+			$dbsv.show()
+		
 		feedback_le.text = ""
 		feedback.visible = false
 		gv.nh_open = false
@@ -74,26 +76,17 @@ func _on_button_pressed() -> void:
 	feedback.visible = false
 	gv.nh_open = false
 
-
-func _on_timer_timeout() -> void:
-	replay_tmpvc = Transform2D()
-	replay_tmpvc.x = Vector2(gv.playernode.global_position.x,gv.playernode.global_position.y)
-	replay_tmpvc.y = Vector2(gv.playernode.rotation_degrees, gv.playernode.n_rotation.rotation_degrees)
-	replay_tmpvc.origin = Vector2(int(replay_fc),0)
-	replay_fc = false
-	replay.append(replay_tmpvc)
-
 func finish_replay():
+	replay_active = false
 	$Timer.stop()
-	replay[0] = Transform2D(Vector2(0.1,0),Vector2.ZERO, Vector2.ZERO)
 	
 func save_replayfile(filepath):
 	var file = FileAccess.open(filepath, FileAccess.WRITE)
-	file.store_string(str(replay))
+	file.store_string(var_to_str(replay))
 	
 func upload_replayfile(name):
 	req = {}
-	req["replay"] = str(replay)
+	req["replay"] = var_to_str(replay)
 	req["name"] = name
 	req["wphones"] = gv.wphones
 	req["vistas"] = gv.vistas
@@ -102,3 +95,16 @@ func upload_replayfile(name):
 	
 	req_body = JSON.stringify(req)
 	http_feedback.request("http://172.16.139.69:5000/upload", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
+
+func _on_timer_timeout() -> void:
+	if replay_active:
+		replay_tmpvec = Vector4.ZERO
+		replay_tmpvec.x = gv.playernode.global_position.x
+		replay_tmpvec.y = gv.playernode.global_position.y
+		replay_tmpvec.z = gv.playernode.global_rotation_degrees
+		replay_tmpvec.w = gv.playernode.n_rotation.global_rotation_degrees
+		replay.append(replay_tmpvec)
+
+
+func _on_dbsv_file_selected(path: String) -> void:
+	save_replayfile(path)

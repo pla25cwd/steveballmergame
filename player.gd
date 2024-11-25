@@ -20,6 +20,11 @@ var tuxbattle : bool = false
 var vel_previous = 0
 @onready var thud = $thud
 
+var is_replayviewer : bool = false
+var replayfile
+var replay_i = 1
+var rf_check : bool = false
+
 @export var ballmer_on_crack : bool = false
 @export var aim_steady : float = 0.95
 @export var sprite_shake : float = 0
@@ -36,10 +41,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	n_rotation.rotation += lerpf(n_rotation.get_angle_to(get_global_mouse_position()), 0, aim_steady)
-
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and n_timer.time_left == 0 and gv.can_fire and !gv.nh_open:
 		fire()
-	
+
 	if cam_zoom_override == 0:
 		cam_zoom_target = remap(linear_velocity.length(), 0.0, 1000.0, 1.25, 0.25)
 	else:
@@ -65,7 +69,6 @@ func fire() -> void:
 	n_flash.rotation_degrees = randf_range(-10,10)
 	n_flash.frame = randi_range(0,1)
 	n_flashanim.stop()
-	gv.nethand.replay_fc = true
 	if b2loaded or ballmer_on_crack:
 		n_flashanim.play("b2")
 		n_timer.start(0.5)
@@ -93,6 +96,8 @@ func exit_spawn():
 	cam_zoom_override = 0
 
 func _input(event: InputEvent) -> void:
+	if Input.is_key_pressed(KEY_F6):
+		$CanvasLayer2/Control/PanelContainer.show()
 	if OS.has_feature("editor"):
 		if Input.is_action_just_pressed("db1"):
 			db_save = position
@@ -100,3 +105,9 @@ func _input(event: InputEvent) -> void:
 			freeze = true
 			set_deferred("position", db_save)
 			freeze = false
+
+func _on_button_2_pressed() -> void:
+	$CanvasLayer2/Control/PanelContainer.hide()
+
+func _on_yah_pressed() -> void:
+	gv.init_replayviewer()
