@@ -11,3 +11,6 @@ func _ready() -> void:
 
 func c_activate():
 	visible = !hide
+
+func c_deactivate():
+	visible = hide

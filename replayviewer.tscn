@@ -1,11 +1,13 @@
-[gd_scene load_steps=78 format=4 uid="uid://djtrtgk46ubyk"]
+[gd_scene load_steps=79 format=4 uid="uid://djtrtgk46ubyk"]
 
 [ext_resource type="Script" path="res://replayviewer.gd" id="1_dwnsg"]
 [ext_resource type="Texture2D" uid="uid://bla1l71mxkd86" path="res://stefan.png" id="2_8grqy"]
 [ext_resource type="Texture2D" uid="uid://cnr0tav72pfh8" path="res://stefan2.png" id="3_1w7ba"]
 [ext_resource type="Texture2D" uid="uid://bsxj865qjq0xw" path="res://sg2.png" id="4_4guqn"]
 [ext_resource type="Texture2D" uid="uid://n0fqb2qxv0r0" path="res://background.png" id="5_dy32t"]
+[ext_resource type="Texture2D" uid="uid://cu6obs251s3bg" path="res://Timer.png" id="6_0nn0b"]
 [ext_resource type="Shader" path="res://idk.gdshader" id="6_fclng"]
+[ext_resource type="Texture2D" uid="uid://dh8qwly7fblyi" path="res://playpause.png" id="6_karql"]
 [ext_resource type="Script" path="res://christcontroller.gd" id="7_o17tr"]
 [ext_resource type="Texture2D" uid="uid://dbrd11ysqkcxv" path="res://foreground.png" id="8_opel2"]
 [ext_resource type="Texture2D" uid="uid://17edkcuh8pyd" path="res://tileset.png" id="9_asxtr"]
@@ -81,16 +83,14 @@ animations = [{
 [sub_resource type="LabelSettings" id="LabelSettings_h3x6a"]
 font_size = 12
 
-[sub_resource type="LabelSettings" id="LabelSettings_nd7xl"]
-font_size = 12
-
-[sub_resource type="LabelSettings" id="LabelSettings_ewd7k"]
-font_size = 12
-
 [sub_resource type="LabelSettings" id="LabelSettings_w3s8n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n3t1r"]
 font_size = 24
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qaoe"]
+atlas = ExtResource("6_karql")
+region = Rect2(0, 0, 15, 15)
 
 [sub_resource type="Gradient" id="Gradient_c17n3"]
 
@@ -256,6 +256,7 @@ script = ExtResource("1_dwnsg")
 
 [node name="ballmer" type="AnimatedSprite2D" parent="."]
 z_index = 10
+position = Vector2(1731, -2006)
 sprite_frames = SubResource("SpriteFrames_gh04u")
 
 [node name="rotation" type="Node2D" parent="ballmer"]
@@ -267,6 +268,12 @@ speed_scale = 1.226
 
 [node name="Camera2D" type="Camera2D" parent="ballmer"]
 position_smoothing_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ballmer" groups=["christmassiers"]]
+position = Vector2(-5, -15)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("122_1m84g")
+script = ExtResource("146_pst8w")
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
@@ -313,41 +320,25 @@ text = "Replay"
 label_settings = SubResource("LabelSettings_h3x6a")
 vertical_alignment = 1
 
-[node name="name" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/titleinfo"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Replay"
-label_settings = SubResource("LabelSettings_nd7xl")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="date" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/titleinfo"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Replay"
-label_settings = SubResource("LabelSettings_ewd7k")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="loader" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox"]
 layout_mode = 2
 
-[node name="filename" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader"]
+[node name="Panel" type="Panel" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "a"
+
+[node name="filename" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader/Panel"]
+show_behind_parent = true
+layout_mode = 2
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 281.0
+offset_bottom = 25.0
+size_flags_horizontal = 3
 label_settings = SubResource("LabelSettings_w3s8n")
 clip_text = true
 text_overrun_behavior = 3
 text_direction = 2
-
-[node name="Panel" type="Panel" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader/filename"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="fload" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader"]
 layout_mode = 2
@@ -365,7 +356,7 @@ size_flags_vertical = 10
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer2"]
+[node name="currentframe" type="Label" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer2"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
@@ -384,26 +375,85 @@ size_flags_horizontal = 8
 text = "0"
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback"]
+[node name="Container" type="MarginContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="framecontrols" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container"]
+layout_mode = 2
+alignment = 1
+
+[node name="f_back" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "<"
+
+[node name="pause" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols"]
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+icon = SubResource("AtlasTexture_4qaoe")
+icon_alignment = 1
+
+[node name="f_forw" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = ">"
+
+[node name="speedsetting" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+button_mask = 0
+text = "1x"
+icon = ExtResource("6_0nn0b")
+
+[node name="speedcontrols" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="speeddown" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/speedcontrols"]
+layout_mode = 2
+focus_mode = 0
+text = "<<"
+icon = ExtResource("6_0nn0b")
+
+[node name="speedup" type="Button" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/speedcontrols"]
+layout_mode = 2
+focus_mode = 0
+text = ">>"
+icon = ExtResource("6_0nn0b")
+icon_alignment = 2
+
+[node name="settings" type="HBoxContainer" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox"]
 layout_mode = 2
 
-[node name="pause" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer"]
+[node name="interp" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings"]
 layout_mode = 2
-button_pressed = true
-text = "Pause"
-
-[node name="interp" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
+focus_mode = 0
 button_pressed = true
 text = "Interp."
 alignment = 2
 
-[node name="follow" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer"]
+[node name="follow" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
+focus_mode = 0
 button_pressed = true
 text = "Follow"
+alignment = 2
+
+[node name="chrimb" type="CheckButton" parent="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings"]
+layout_mode = 2
+size_flags_horizontal = 6
+focus_mode = 0
+text = "Chrimb."
 alignment = 2
 
 [node name="FileDialog" type="FileDialog" parent="CanvasLayer/rvc"]
@@ -1071,7 +1121,12 @@ texture_mode = 1
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/loader/fload" to="." method="_on_fload_pressed"]
 [connection signal="value_changed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer2/playback" to="." method="_on_playback_value_changed"]
-[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer/pause" to="." method="_on_paused_toggled"]
-[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer/interp" to="." method="_on_interp_toggled"]
-[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/HBoxContainer/follow" to="." method="_on_follow_toggled"]
+[connection signal="pressed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols/f_back" to="." method="_on_f_back_pressed"]
+[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols/pause" to="." method="_on_paused_toggled"]
+[connection signal="pressed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/framecontrols/f_forw" to="." method="_on_f_forw_pressed"]
+[connection signal="pressed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/speedcontrols/speeddown" to="." method="_on_speeddown_pressed"]
+[connection signal="pressed" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/playback/Container/speedcontrols/speedup" to="." method="_on_speedup_pressed"]
+[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings/interp" to="." method="_on_interp_toggled"]
+[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings/follow" to="." method="_on_follow_toggled"]
+[connection signal="toggled" from="CanvasLayer/rvc/rvc_panel/rvc_margin/rvc_vbox/settings/chrimb" to="." method="_on_chrimb_toggled"]
 [connection signal="file_selected" from="CanvasLayer/rvc/FileDialog" to="." method="_on_file_dialog_file_selected"]

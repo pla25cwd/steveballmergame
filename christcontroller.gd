@@ -16,3 +16,6 @@ func c_activate():
 func _physics_process(delta: float) -> void:
 	if visible:
 		noise.offset += Vector3(0.1,-0.1,0)
+
+func c_deactivate():
+	visible = false

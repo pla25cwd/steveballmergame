@@ -49,7 +49,10 @@ func _on_feedback_le_gui_input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
 		if feedback_le.text == "chrimbus":
 			get_tree().call_group("christmassiers", "c_activate")
-			
+		
+		if feedback_le.text == "antichrimbus":
+			get_tree().call_group("christmassiers", "c_deactivate")
+		
 		if feedback_le.text == "zumkotzn":
 			gv.playernode.n_camera.ignore_rotation = false
 			gv.playernode.n_camera.position_smoothing_enabled = false
