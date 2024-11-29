@@ -1,28 +1,11 @@
 extends Node2D
 
-var title_extensions : PackedStringArray = PackedStringArray()
+var title_extensions : PackedStringArray = PackedStringArray(["Deluxe","Limited Edition","Premium Edition","Remastered","Digital Edition","PS2 Bundle","+ 2 Months Satellaview","+ 1 Months PornHub Premium","Only on Nintendo Virtual Boy","Nintendo Switch 7 Bundle Edition","Free Collectible Steve Ballmer Figurine included!","As Seen on TV Edition","With Pre-Order Bonus","2013 Remake","Pre-Code Version","With 50 Graphics!","Denuvo Edition!","IStGHJ approved Release"])
 var filepath
 var file
 var line
 
 func _ready() -> void:
-	
-	$complaint.visible = false
-	$complaint2.visible = false
-	
-	if OS.has_feature("editor"):
-		filepath = "/home/saddam/new-game-project/external/mbs_titles"
-	else:
-		filepath = OS.get_executable_path().get_base_dir().path_join("mbs_titles")
-		
-	if FileAccess.file_exists(filepath):
-		file = FileAccess.open(filepath, FileAccess.READ)
-		while !file.eof_reached():
-			title_extensions.append(file.get_line())
-		
-	else:
-		$complaint.visible = true
-	
 	for i in randi_range(3,mini(10,title_extensions.size())):
 		line = randi_range(0,title_extensions.size()-1)
 		$versionn3.text += title_extensions[line] + " "

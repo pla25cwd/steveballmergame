@@ -31,7 +31,7 @@ func explode():
 func _physics_process(delta: float) -> void:
 	if active:
 		if homing:
-			rotate(lerpf(0, get_angle_to(gv.playernode.global_position), 0.05))
+			rotate(lerpf(0, get_angle_to(gv.playernode.global_position)+randf_range(-2,2), 0.05))
 		else:
 			sprite.rotation_degrees += 5
 	

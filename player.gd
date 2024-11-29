@@ -33,7 +33,6 @@ var rf_check : bool = false
 var db_save : Vector2
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	if gv.playernode == null:
 		gv.playernode = self
 	n_timerlabel.visible = false
@@ -69,6 +68,7 @@ func fire() -> void:
 	n_flash.rotation_degrees = randf_range(-10,10)
 	n_flash.frame = randi_range(0,1)
 	n_flashanim.stop()
+	gv.nethand.replay_fcheck = true
 	if b2loaded or ballmer_on_crack:
 		n_flashanim.play("b2")
 		n_timer.start(0.5)
@@ -110,4 +110,4 @@ func _on_button_2_pressed() -> void:
 	$CanvasLayer2/Control/PanelContainer.hide()
 
 func _on_yah_pressed() -> void:
-	gv.init_replayviewer()
+	get_tree().change_scene_to_packed(preload("res://replayviewer.tscn"))

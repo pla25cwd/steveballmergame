@@ -5,7 +5,6 @@ func _ready() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "player":
-		print("yep")
 		$AudioStreamPlayer2D.play()
 		gv.playernode.cam_zoom_override = 0.7
 		gv.can_fire = false

@@ -92,7 +92,6 @@ func _on_tuxler_coll_body_entered(body: Node2D) -> void:
 	if body.name.begins_with("tb_dropobjects"):
 		body.die()
 		if stage == 0 and !body.vista:
-			print("hitwp")
 			tux_anim.play("hit_wphones")
 		elif stage == 1 and body.vista:
 			tux_anim.play("hit_vista")
@@ -103,3 +102,8 @@ func c_activate():
 
 func _on_ray_cast_2d_body_entered(body: Node2D) -> void:
 	$carrier/AnimationPlayer.play("new_animation")
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.name == "player":
+		env_anim.play("plat")

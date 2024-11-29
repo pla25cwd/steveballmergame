@@ -114,14 +114,6 @@ process_callback = 0
 wait_time = 0.1
 autostart = true
 
-[node name="dbsv" type="FileDialog" parent="."]
-auto_translate_mode = 1
-size = Vector2i(207, 175)
-ok_button_text = "Save"
-access = 2
-filters = PackedStringArray("*.msreplay;Michealsoft Secure Replay Format 2003")
-use_native_dialog = true
-
 [connection signal="gui_input" from="feedback/PanelContainer/MarginContainer/VBoxContainer/feedback_le" to="." method="_on_feedback_le_gui_input"]
+[connection signal="text_changed" from="feedback/PanelContainer/MarginContainer/VBoxContainer/feedback_le" to="." method="_on_feedback_le_text_changed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="file_selected" from="dbsv" to="." method="_on_dbsv_file_selected"]

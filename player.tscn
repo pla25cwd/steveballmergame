@@ -369,6 +369,7 @@ z_index = 2
 collision_layer = 3
 collision_mask = 3
 can_sleep = false
+constant_torque = 0.085
 script = ExtResource("1_dh8lc")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -413,6 +414,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(-13, -11, -15, -3, -13, 5, -6, 16, 1, 20, 6, 19, 13, 11, 15, -3, 13, -13, 8, -19, 3, -21, -5, -19)
 
 [node name="fire" type="AudioStreamPlayer2D" parent="."]

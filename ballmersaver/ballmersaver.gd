@@ -9,7 +9,6 @@ func _physics_process(delta: float) -> void:
 	if raycast.is_colliding() and raycast.get_collider().name == "player":
 		raycast.enabled = false
 		gv.playernode.cam_zoom_override = 1
-		print("yep")
 		anim.play("ballmersaved")
 
 func go_to_player():
