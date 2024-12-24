@@ -8,6 +8,7 @@ func _ready() -> void:
 	noise = get_texture().get_noise()
 	visible = false
 	if Time.get_date_dict_from_system()["month"] == 12:
+		await RenderingServer.frame_post_draw
 		get_tree().call_group("christmassiers", "c_activate")
 
 func c_activate():

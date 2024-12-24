@@ -46,7 +46,7 @@ func feedback_req(message):
 	req["unixtime"] = roundi(Time.get_unix_time_from_system())
 	
 	req_body = JSON.stringify(req)
-	http_feedback.request("https://172.16.139.69:5000/feedback", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
+	http_feedback.request("https://gringpartei.ch:5000/feedback", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("f1"):
@@ -114,7 +114,7 @@ func upload_replayfile(name):
 	req["unixtime"] = roundi(Time.get_unix_time_from_system())
 	
 	req_body = JSON.stringify(req)
-	http_feedback.request("https://172.16.139.69:5000/upload", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
+	http_feedback.request("https://gringpartei.ch:5000/upload", ["Content-Type: application/json"], HTTPClient.METHOD_POST, req_body)
 
 func _on_timer_timeout() -> void:
 	if replay_active:

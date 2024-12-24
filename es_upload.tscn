@@ -36,7 +36,7 @@ vertical_alignment = 1
 [node name="Label2" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "you can upload your time and score to the [url={https://172.16.139.69/sbgame/leaderboard.html}]leaderboard[/url], and itll eventually show up eventually aswell as the replay
+text = "you can upload your time and score to the [url={https://gringpartei.ch/sbgame/leaderboard.html}]leaderboard[/url], and itll eventually show up eventually aswell as the replay
 
 you can watch a replay file by pressing F6
 
