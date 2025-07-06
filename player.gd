@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 
 func fire() -> void:
 	apply_central_impulse((n_vec.global_position - global_position)*75)
-	apply_impulse(Vector2(-1,0), (n_vecpos.global_position - global_position)*100) # ???????????
+	apply_impulse(Vector2(-1,0), (n_vecpos.global_position - global_position)*50) # ???????????
 	n_flash.skew = randf_range(-25,25)
 	n_flash.rotation_degrees = randf_range(-10,10)
 	n_flash.frame = randi_range(0,1)

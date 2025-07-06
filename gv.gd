@@ -1,7 +1,7 @@
 extends Node
 
-var wphones : int = 69
-var vistas : int = 69
+var wphones : int = 0
+var vistas : int = 0
 var can_fire = true
 var nh_open = false
 var shots_fired : int = 0
@@ -11,7 +11,8 @@ var audiohandler : Node
 var nethand : CanvasLayer
 
 func _init() -> void:
-	JavaScriptBridge.get_interface("document").getElementById("splash").remove()
+	pass
+#	JavaScriptBridge.get_interface("document").getElementById("splash").remove()
 
 func decode_float32arr(float32arr : float):
 	var tmp_value : Array[bool] = []

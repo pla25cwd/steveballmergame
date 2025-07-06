@@ -1,8 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://bohqa1jf0frps"]
+[gd_scene load_steps=10 format=3 uid="uid://bohqa1jf0frps"]
 
 [ext_resource type="Script" path="res://nethand.gd" id="1_2lepl"]
 [ext_resource type="Texture2D" uid="uid://dmrmjt1xghq3l" path="res://711.png" id="2_ieul5"]
 [ext_resource type="AudioStream" uid="uid://b357q2cfkid1i" path="res://notify.wav" id="3_pcg3t"]
+
+[sub_resource type="FontVariation" id="FontVariation_4sewr"]
+variation_embolden = -0.95
+variation_transform = Transform2D(1.335, -0.71, 0.975, 1, 0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gvmsr"]
+font = SubResource("FontVariation_4sewr")
+font_size = 36
+shadow_size = 91
+shadow_color = Color(1, 0, 0, 0.239216)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6eire"]
 
@@ -34,6 +44,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="http_feedback" type="HTTPRequest" parent="feedback"]
+
+[node name="Label2" type="Label" parent="feedback"]
+z_index = 115
+layout_mode = 2
+offset_left = 355.0
+offset_top = 189.0
+offset_right = 899.0
+offset_bottom = 239.0
+rotation = 0.459081
+text = "this doesnt work any more lol"
+label_settings = SubResource("LabelSettings_gvmsr")
 
 [node name="PanelContainer" type="PanelContainer" parent="feedback"]
 layout_mode = 1
